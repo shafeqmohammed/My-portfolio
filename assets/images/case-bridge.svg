@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<defs>
+<radialGradient id="bg" cx="50%" cy="20%" r="80%"><stop offset="0" stop-color="#16244a"></stop><stop offset="0.6" stop-color="#0a0d13"></stop><stop offset="1" stop-color="#05070c"></stop></radialGradient>
+<linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4560"></stop><stop offset="1" stop-color="#1c2232"></stop></linearGradient>
+<linearGradient id="left" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151a27"></stop><stop offset="1" stop-color="#0b0e15"></stop></linearGradient>
+<linearGradient id="right" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202839"></stop><stop offset="1" stop-color="#11151f"></stop></linearGradient>
+<linearGradient id="led" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4b8dff"></stop><stop offset="1" stop-color="#8ab4ff"></stop></linearGradient>
+<radialGradient id="pool" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#2670ff" stop-opacity="0.6"></stop><stop offset="1" stop-color="#2670ff" stop-opacity="0"></stop></radialGradient>
+<filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"></feGaussianBlur></filter>
+<pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity="0.05"></path></pattern>
+</defs>
+<rect width="1200" height="800" fill="url(#bg)"></rect>
+<rect width="1200" height="800" fill="url(#grid)"></rect>
+<ellipse cx="600" cy="640" rx="380" ry="110" fill="url(#pool)"></ellipse>
+<g>
+<polygon points="288,520 600,610 600,670 288,580" fill="url(#left)"></polygon>
+<polygon points="912,520 600,610 600,670 912,580" fill="url(#right)"></polygon>
+<polygon points="600,430 912,520 600,610 288,520" fill="url(#top)"></polygon>
+<polygon points="640,640 880,571 880,579 640,648" fill="url(#led)"></polygon>
+<polygon points="640,626 760,591 760,597 640,632" fill="#6fdc9c"></polygon>
+</g>
+<g>
+<polygon points="288,400 600,490 600,550 288,460" fill="url(#left)"></polygon>
+<polygon points="912,400 600,490 600,550 912,460" fill="url(#right)"></polygon>
+<polygon points="600,310 912,400 600,490 288,400" fill="url(#top)"></polygon>
+<polygon points="640,520 880,451 880,459 640,528" fill="url(#led)"></polygon>
+<polygon points="640,506 820,454 820,460 640,512" fill="url(#led)" opacity="0.6"></polygon>
+</g>
+<g>
+<polygon points="288,280 600,370 600,430 288,340" fill="url(#left)"></polygon>
+<polygon points="912,280 600,370 600,430 912,340" fill="url(#right)"></polygon>
+<polygon points="600,190 912,280 600,370 288,280" fill="url(#top)"></polygon>
+<polygon points="640,400 880,331 880,339 640,408" fill="url(#led)"></polygon>
+<polygon points="640,386 700,369 700,375 640,392" fill="#f5c96a"></polygon>
+<polygon points="600,214 860,289 600,364 340,289" fill="none" stroke="#8ab4ff" stroke-opacity="0.35" stroke-width="1.5"></polygon>
+<g fill="#8ab4ff" opacity="0.8">
+<polygon points="520,262 560,250 600,262 560,274"></polygon><polygon points="600,262 640,250 680,262 640,274"></polygon><polygon points="560,286 600,274 640,286 600,298"></polygon>
+</g>
+</g>
+<g opacity="0.9">
+<circle cx="190" cy="200" r="6" fill="#8ab4ff"></circle><circle cx="1010" cy="160" r="4" fill="#ffffff" opacity="0.6"></circle><circle cx="1050" cy="420" r="8" fill="#4b8dff"></circle><circle cx="150" cy="560" r="4" fill="#ffffff" opacity="0.5"></circle>
+</g>
+<path d="M600 190 L600 90" stroke="#8ab4ff" stroke-opacity="0.5" stroke-dasharray="4 8" stroke-width="2"></path>
+<circle cx="600" cy="80" r="12" fill="#4b8dff"></circle><circle cx="600" cy="80" r="28" fill="#4b8dff" opacity="0.25" filter="url(#blur)"></circle>
+</svg>

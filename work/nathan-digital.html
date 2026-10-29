@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building the design function at Nathan Digital · Case study</title>
+<meta name="description" content="Leading a distributed team of designers and front-end developers in Dubai — establishing standards, supporting delivery and developing a culture of design quality.">
+<meta name="theme-color" content="#05070c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Building the design function at Nathan Digital · Case study">
+<meta property="og:description" content="Leading a distributed team of designers and front-end developers in Dubai — establishing standards, supporting delivery and developing a culture of design quality.">
+<meta property="og:image" content="../assets/images/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05070c}
+a{color:#f2f3f5;text-decoration:none;transition:color 120ms ease-out}a:hover{color:#8ab4ff}
+a:focus-visible,button:focus-visible{outline:2px solid #8ab4ff;outline-offset:3px}
+.w{max-width:1200px;margin:0 auto;padding:0 48px;box-sizing:border-box}
+.k{font-family:'Geist Mono',ui-monospace,monospace;font-size:11px;line-height:16px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a9afbc}
+.m{font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;line-height:18px;color:#a9afbc}
+.nl{font-size:13px;line-height:18px;color:#a9afbc;padding:12px 2px}.nl:hover,.nl.on{color:#f2f3f5}
+.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:9999px;font-family:Geist,sans-serif;font-size:13px;font-weight:500;border:0;cursor:pointer;box-sizing:border-box}
+.bw{background:#f3f4f6;color:#0b0e14}.bw:hover{color:#0b0e14;background:#ffffff}
+.bo{background:transparent;color:#f2f3f5;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.42)}.bo:hover{color:#f2f3f5;background:rgba(255,255,255,0.08)}
+.hr{box-shadow:inset 0 1px 0 rgba(255,255,255,0.10)}
+.st{position:relative;overflow:hidden;border-radius:28px;background:radial-gradient(700px 400px at 50% -10%,rgba(38,112,255,0.20),transparent 70%),#0a0d13;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.10)}
+.gl{background:rgba(26,29,37,0.55);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.12),inset 0 0 0 1px rgba(255,255,255,0.10),0 24px 48px -28px rgba(0,0,0,0.55)}
+.bd{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:9999px;font-family:'Geist Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap}
+.ok{color:#6fdc9c;background:rgba(111,220,156,0.12);box-shadow:inset 0 0 0 1px rgba(111,220,156,0.45)}
+.nt{color:#a9afbc;background:rgba(255,255,255,0.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.30)}
+.d{font-size:64px;line-height:64px;font-weight:600;letter-spacing:-0.04em}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.body{display:grid;grid-template-columns:220px minmax(0,720px);gap:96px;align-items:start}
+.toc{display:flex;flex-direction:column;gap:2px}
+.toc a{font-size:13px;line-height:18px;color:#a9afbc;padding:8px 0}.toc a:hover{color:#f2f3f5}
+.sec{padding-top:24px;margin-bottom:96px}
+.sec h2{margin:12px 0 24px;font-size:32px;line-height:38px;font-weight:500;letter-spacing:-0.03em}
+.sec p{margin:0 0 20px;font-size:17px;line-height:28px;letter-spacing:-0.01em;color:#c9cdd6}
+.li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:16px 0;font-size:17px;line-height:28px;color:#c9cdd6}
+.dec{display:grid;grid-template-columns:48px minmax(0,1fr);gap:16px;padding:28px 0}
+.dec h3{margin:0 0 8px;font-size:20px;line-height:26px;font-weight:500;letter-spacing:-0.02em}
+.dec p{margin:0 0 12px;font-size:15px;line-height:24px;color:#a9afbc}
+.c2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ph{color:#f5c96a}
+.team{display:grid;grid-template-columns:repeat(10,28px);gap:14px}
+.p{width:28px;height:28px;border-radius:9999px;background:rgba(255,255,255,0.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.30)}
+.p.d1{background:rgba(75,141,255,0.30);box-shadow:inset 0 0 0 1px #4b8dff}
+@media (max-width:900px){.w{padding:0 16px}.d{font-size:44px;line-height:48px}.meta,.c2{grid-template-columns:minmax(0,1fr)}.body{grid-template-columns:minmax(0,1fr);gap:32px}.toc{display:none}.team{grid-template-columns:repeat(7,28px)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-transparency:reduce){.gl{background:#14171d;backdrop-filter:none}}
+</style>
+<script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+<div style="min-height: 100vh; font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: #f2f3f5; background: radial-gradient(1100px 620px at 15% -10%, rgba(38,112,255,0.20), transparent 65%), #05070c">
+
+<header class="w" style="padding-top: 32px; padding-bottom: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px">
+<a href="../index.html" style="font-size: 15px; font-weight: 600; letter-spacing: -0.02em">Shafeq<span style="color: #4b8dff">.</span></a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 28px">
+<a class="nl on" href="../work.html">Work</a>
+<a class="nl" href="../editorial.html">Editorial</a>
+<a class="nl" href="../book.html">Book</a>
+<a class="nl" href="../about.html">About</a>
+<a class="b bo" href="../contact.html" style="height: 40px">Contact</a>
+</nav>
+</header>
+
+<section class="w" style="padding-top: 64px">
+<nav aria-label="Breadcrumb" class="m" style="display: flex; gap: 8px; margin-bottom: 48px"><a href="../work.html" style="color: #a9afbc">Work</a><span aria-hidden="true">/</span><span aria-current="page" style="color: #f2f3f5">Nathan Digital</span></nav>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px"><span class="k">Case study 04 · Leadership</span><span class="bd ok">Completed</span></div>
+<h1 class="d" style="margin: 0; max-width: 960px">Building the design function at Nathan Digital</h1>
+<p style="margin: 24px 0 0; max-width: 760px; font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: -0.025em; color: #a9afbc">Leading a distributed team of designers and front-end developers in Dubai — establishing standards, supporting delivery and developing a culture of design quality.</p>
+
+<div class="meta hr" style="margin-top: 64px; padding-top: 24px">
+<div><div class="k" style="margin-bottom: 8px">Role</div><div style="font-size: 14px; line-height: 22px" class="ph">[Exact title]</div></div>
+<div><div class="k" style="margin-bottom: 8px">Company</div><div style="font-size: 14px; line-height: 22px">Nathan Digital, Dubai</div></div>
+<div><div class="k" style="margin-bottom: 8px">Team</div><div style="font-size: 14px; line-height: 22px">19 designers and front-end developers</div></div>
+<div><div class="k" style="margin-bottom: 8px">Timeline</div><div style="font-size: 14px; line-height: 22px" class="ph">[Start – end]</div></div>
+</div>
+
+<figure style="margin: 48px 0 0">
+<div class="st" style="height: 520px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 64px; padding: 48px; box-sizing: border-box">
+<div>
+<div class="k" style="margin-bottom: 20px">Distributed team · 19</div>
+<img loading="lazy" decoding="async" src="../assets/images/case-leadership.svg" alt="Illustration of a distributed team of 19 connected around a lead" style="width: 480px; max-width: 100%; height: 320px; object-fit: cover; border-radius: 20px; display: block; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10)">
+<div class="m" style="margin-top: 20px; display: flex; gap: 20px"><span><span style="display: inline-block; width: 8px; height: 8px; border-radius: 9999px; background: #4b8dff; margin-right: 6px"></span>Design</span><span><span style="display: inline-block; width: 8px; height: 8px; border-radius: 9999px; background: rgba(255,255,255,0.30); margin-right: 6px"></span>Front-end</span><span class="ph">[confirm split]</span></div>
+</div>
+<div class="gl" style="border-radius: 20px; padding: 24px; width: 320px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div class="k">Operating rhythm</div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Design critique</span><span class="m ph">[cadence]</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Design–dev review</span><span class="m ph">[cadence]</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Stakeholder check-in</span><span class="m ph">[cadence]</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>1:1s and growth</span><span class="m ph">[cadence]</span></div>
+</div>
+</div>
+<figcaption class="m" style="margin-top: 12px">Illustrative — confirm team composition and rituals before publishing.</figcaption>
+</figure>
+</section>
+
+<section class="w" style="padding-top: 120px">
+<div class="body">
+<nav aria-label="On this page" class="toc">
+<span class="k" style="margin-bottom: 12px">On this page</span>
+<a href="#overview">Overview</a><a href="#scope">Leadership scope</a><a href="#start">Starting point</a><a href="#built">What I built</a><a href="#hard">A difficult moment</a><a href="#culture">Team vs. culture</a><a href="#outcome">Outcome</a><a href="#lessons">Lessons</a>
+</nav>
+<article>
+
+<section id="overview" class="sec hr">
+<span class="k">01 — Overview</span>
+<h2>From a group of practitioners to a design function</h2>
+<p>At Nathan Digital in Dubai I led a distributed team of 19 designers and front-end developers. The work went beyond managing delivery: it meant establishing shared standards, supporting projects through to launch, managing stakeholder expectations and developing a culture where good design decisions could happen consistently.</p>
+</section>
+
+<section id="scope" class="sec hr">
+<span class="k">02 — Leadership scope</span>
+<h2>What I was responsible for</h2>
+<p>Precise scope matters for a leadership case study, so it is stated plainly here.</p>
+<div class="gl" style="border-radius: 20px; overflow: hidden">
+<div class="li hr" style="padding: 16px 24px; box-shadow: none"><span class="m">→</span><span><span style="color: #f2f3f5">Direct reports:</span> <span class="ph">[number and disciplines]</span></span></div>
+<div class="li hr" style="padding: 16px 24px"><span class="m">→</span><span><span style="color: #f2f3f5">Coordinated, not managed:</span> <span class="ph">[people or teams]</span></span></div>
+<div class="li hr" style="padding: 16px 24px"><span class="m">→</span><span><span style="color: #f2f3f5">Reporting line:</span> <span class="ph">[who you reported to]</span></span></div>
+<div class="li hr" style="padding: 16px 24px"><span class="m">→</span><span><span style="color: #f2f3f5">Decisions I owned:</span> <span class="ph">[hiring, standards, tooling, project staffing, quality sign-off]</span></span></div>
+<div class="li hr" style="padding: 16px 24px"><span class="m">→</span><span><span style="color: #f2f3f5">Geographies:</span> <span class="ph">[locations and time zones]</span></span></div>
+</div>
+</section>
+
+<section id="start" class="sec hr">
+<span class="k">03 — Starting point</span>
+<h2>What needed to change</h2>
+<p class="ph">[Describe the situation when you started — e.g. inconsistent quality between projects, unclear design–development handoff, limited design involvement in early decisions. Use what was actually true.]</p>
+</section>
+
+<section id="built" class="sec hr">
+<span class="k">04 — What I built</span>
+<h2>Four areas of work</h2>
+<div class="dec hr"><span class="m" style="color: #4b8dff">01</span><div><h3>Shared standards</h3><p>Common expectations for quality, documentation and design–development handoff, so work was consistent regardless of who delivered it.</p><p class="ph" style="font-size: 15px">[Specific standards you introduced]</p></div></div>
+<div class="dec hr"><span class="m" style="color: #4b8dff">02</span><div><h3>Alignment across a distributed team</h3><p>Rituals and channels that kept designers and front-end developers working from the same decisions across locations.</p><p class="ph" style="font-size: 15px">[Rituals, tools and how they worked]</p></div></div>
+<div class="dec hr"><span class="m" style="color: #4b8dff">03</span><div><h3>Delivery support and stakeholder expectations</h3><p>Clear scope, review points and honest communication with clients and internal stakeholders, so quality held under deadline pressure.</p><p class="ph" style="font-size: 15px">[Example of a delivery you supported]</p></div></div>
+<div class="dec hr" style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(255,255,255,0.10)"><span class="m" style="color: #4b8dff">04</span><div><h3>Growing people</h3><p>Critique that encouraged learning rather than approval, coaching and room for designers to think beyond the immediate task.</p><p class="ph" style="font-size: 15px">[Hiring, coaching or promotion examples]</p></div></div>
+</section>
+
+<section id="hard" class="sec hr">
+<span class="k">05 — A difficult moment</span>
+<h2>Conflict and prioritisation</h2>
+<p class="ph">[One concrete story: competing priorities, a stakeholder disagreement or limited resources — what was at stake, what you decided, and what happened.]</p>
+</section>
+
+<section id="culture" class="sec hr">
+<span class="k">06 — Team vs. culture</span>
+<h2>Building a team is not the same as building a design culture</h2>
+<p>A team can have talented designers, a strong design system and good tools — and still struggle to influence the product. Culture is shaped by how decisions are made.</p>
+<div class="li hr"><span class="m">01</span><span>Can designers challenge assumptions?</span></div>
+<div class="li hr"><span class="m">02</span><span>Are they involved early enough to influence direction?</span></div>
+<div class="li hr"><span class="m">03</span><span>Do reviews encourage learning, or simply approval?</span></div>
+<div class="li hr"><span class="m">04</span><span>Does the team understand the business problem behind the work?</span></div>
+<div class="li hr" style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(255,255,255,0.10)"><span class="m">05</span><span>Are designers accountable for outcomes, not just deliverables?</span></div>
+</section>
+
+<section id="outcome" class="sec hr">
+<span class="k">07 — Outcome</span>
+<h2>What changed</h2>
+<div class="c2">
+<div class="gl" style="border-radius: 20px; padding: 24px"><span class="k">For the team</span><p class="ph" style="margin: 16px 0 0; font-size: 15px; line-height: 24px">[e.g. retention, growth, confidence — verified only]</p></div>
+<div class="gl" style="border-radius: 20px; padding: 24px"><span class="k">For delivery</span><p class="ph" style="margin: 16px 0 0; font-size: 15px; line-height: 24px">[e.g. consistency, fewer handoff issues — verified only]</p></div>
+</div>
+</section>
+
+<section id="lessons" class="sec hr" style="margin-bottom: 0">
+<span class="k">08 — Lessons</span>
+<h2>What I took forward</h2>
+<p>Design leadership means creating the conditions in which good design decisions happen consistently: clarity, trust, constructive critique and close collaboration with engineering and product.</p>
+<p class="ph">[What you would do differently, and how it shapes the way you would lead a design team today.]</p>
+</section>
+</article>
+</div>
+</section>
+
+<section class="w" style="padding-top: 160px">
+<a href="../work/bridge.html" class="hr" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; padding-top: 32px">
+<div><div class="k" style="margin-bottom: 12px">Back to the start · 01</div><div style="font-size: 44px; line-height: 48px; font-weight: 600; letter-spacing: -0.035em">Bridge — GPU as a Service</div></div>
+<span class="b bw">Read →</span>
+</a>
+</section>
+
+<footer class="w" style="padding-top: 120px; padding-bottom: 48px">
+<div class="hr" style="padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; font-size: 13px; line-height: 18px; color: #a9afbc"><span>© 2026 Shafeq · Dubai, UAE</span><div style="display: flex; flex-wrap: wrap; gap: 24px"><a href="../work.html" style="color: #a9afbc">Work</a><a href="../editorial.html" style="color: #a9afbc">Editorial</a><a href="../contact.html" style="color: #a9afbc">Contact</a></div></div>
+</footer>
+</div>
+</body>
+</html>

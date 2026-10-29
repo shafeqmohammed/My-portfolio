@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<defs>
+<radialGradient id="bg" cx="50%" cy="25%" r="80%"><stop offset="0" stop-color="#16244a"></stop><stop offset="0.6" stop-color="#0a0d13"></stop><stop offset="1" stop-color="#05070c"></stop></radialGradient>
+<linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b3450" stop-opacity="0.95"></stop><stop offset="1" stop-color="#121725" stop-opacity="0.95"></stop></linearGradient>
+<linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8ab4ff"></stop><stop offset="1" stop-color="#1b56d8"></stop></linearGradient>
+<filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"></feGaussianBlur></filter>
+<pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity="0.05"></path></pattern>
+</defs>
+<rect width="1200" height="800" fill="url(#bg)"></rect>
+<rect width="1200" height="800" fill="url(#grid)"></rect>
+<ellipse cx="600" cy="560" rx="400" ry="120" fill="#2670ff" opacity="0.3" filter="url(#blur)"></ellipse>
+<g transform="translate(600 470) skewY(-12) scale(1 0.9)">
+<rect x="-380" y="-40" width="300" height="200" rx="24" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.15"></rect>
+<g transform="translate(-350 -10)">
+<rect width="52" height="52" rx="12" fill="#4b8dff"></rect><rect x="64" width="52" height="52" rx="12" fill="#1b56d8"></rect><rect x="128" width="52" height="52" rx="12" fill="#6fdc9c"></rect><rect x="192" width="52" height="52" rx="12" fill="#f5c96a"></rect>
+<rect y="72" width="52" height="52" rx="12" fill="#f3f4f6"></rect><rect x="64" y="72" width="52" height="52" rx="12" fill="#a9afbc"></rect><rect x="128" y="72" width="52" height="52" rx="12" fill="#ff8f8f"></rect><rect x="192" y="72" width="52" height="52" rx="12" fill="#8cbff2"></rect>
+</g>
+<rect x="-50" y="-120" width="300" height="200" rx="24" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.15"></rect>
+<g font-family="Helvetica, Arial, sans-serif" fill="#f2f3f5"><text x="-20" y="-40" font-size="64" font-weight="700" letter-spacing="-3">Aa</text><text x="-20" y="0" font-size="18" fill="#a9afbc">Display · 64 / 64</text></g>
+<rect x="-20" y="22" width="120" height="36" rx="18" fill="#f3f4f6"></rect><rect x="110" y="22" width="110" height="36" rx="18" fill="none" stroke="#ffffff" stroke-opacity="0.42"></rect>
+<rect x="280" y="-200" width="260" height="200" rx="24" fill="url(#card)" stroke="#ffffff" stroke-opacity="0.15"></rect>
+<rect x="310" y="-170" width="200" height="40" rx="14" fill="#ffffff" fill-opacity="0.08" stroke="#4b8dff"></rect>
+<rect x="310" y="-115" width="56" height="30" rx="15" fill="url(#glow)"></rect><circle cx="351" cy="-100" r="11" fill="#ffffff"></circle>
+<rect x="380" y="-112" width="130" height="24" rx="12" fill="#6fdc9c" fill-opacity="0.15" stroke="#6fdc9c" stroke-opacity="0.5"></rect>
+<rect x="310" y="-70" width="200" height="8" rx="4" fill="#ffffff" fill-opacity="0.15"></rect><rect x="310" y="-52" width="140" height="8" rx="4" fill="#ffffff" fill-opacity="0.1"></rect>
+</g>
+<g stroke="#8ab4ff" stroke-opacity="0.5" stroke-dasharray="4 8" stroke-width="2" fill="none"><path d="M370 360 C430 300 480 300 540 310"></path><path d="M800 250 C760 230 720 240 690 270"></path></g>
+<circle cx="980" cy="180" r="40" fill="url(#glow)"></circle><text x="980" y="194" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="30" font-weight="700" fill="#ffffff">AI</text>
+<circle cx="980" cy="180" r="80" fill="#4b8dff" opacity="0.25" filter="url(#blur)"></circle>
+<path d="M940 200 C900 240 860 250 820 250" stroke="#8ab4ff" stroke-opacity="0.6" stroke-width="2" fill="none"></path>
+</svg>

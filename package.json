@@ -1,0 +1,9 @@
+{
+  "name": "shafeq-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shafeq's portfolio: a static site with no build step.",
+  "scripts": {
+    "dev": "npx --yes serve@14.2.4 . -l 3000"
+  }
+}

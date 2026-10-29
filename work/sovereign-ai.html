@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sovereign AI / Azure Local · Case study</title>
+<meta name="description" content="Bringing tenant context, roles and permissions, infrastructure and governance together into one coherent enterprise experience.">
+<meta name="theme-color" content="#05070c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sovereign AI / Azure Local · Case study">
+<meta property="og:description" content="Bringing tenant context, roles and permissions, infrastructure and governance together into one coherent enterprise experience.">
+<meta property="og:image" content="../assets/images/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05070c}
+a{color:#f2f3f5;text-decoration:none;transition:color 120ms ease-out}a:hover{color:#8ab4ff}
+a:focus-visible,button:focus-visible{outline:2px solid #8ab4ff;outline-offset:3px}
+.w{max-width:1200px;margin:0 auto;padding:0 48px;box-sizing:border-box}
+.k{font-family:'Geist Mono',ui-monospace,monospace;font-size:11px;line-height:16px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a9afbc}
+.m{font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;line-height:18px;color:#a9afbc}
+.nl{font-size:13px;line-height:18px;color:#a9afbc;padding:12px 2px}.nl:hover,.nl.on{color:#f2f3f5}
+.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:9999px;font-family:Geist,sans-serif;font-size:13px;font-weight:500;border:0;cursor:pointer;box-sizing:border-box}
+.bw{background:#f3f4f6;color:#0b0e14}.bw:hover{color:#0b0e14;background:#ffffff}
+.bo{background:transparent;color:#f2f3f5;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.42)}.bo:hover{color:#f2f3f5;background:rgba(255,255,255,0.08)}
+.hr{box-shadow:inset 0 1px 0 rgba(255,255,255,0.10)}
+.st{position:relative;overflow:hidden;border-radius:28px;background:radial-gradient(700px 400px at 50% -10%,rgba(38,112,255,0.20),transparent 70%),#0a0d13;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.10)}
+.gl{background:rgba(26,29,37,0.55);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.12),inset 0 0 0 1px rgba(255,255,255,0.10),0 24px 48px -28px rgba(0,0,0,0.55)}
+.bd{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:9999px;font-family:'Geist Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap}
+.ok{color:#6fdc9c;background:rgba(111,220,156,0.12);box-shadow:inset 0 0 0 1px rgba(111,220,156,0.45)}
+.ip{color:#8cbff2;background:rgba(140,191,242,0.12);box-shadow:inset 0 0 0 1px rgba(140,191,242,0.45)}
+.wn{color:#f5c96a;background:rgba(245,201,106,0.12);box-shadow:inset 0 0 0 1px rgba(245,201,106,0.45)}
+.nt{color:#a9afbc;background:rgba(255,255,255,0.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.30)}
+.dot{width:8px;height:8px;border-radius:9999px;display:inline-block;flex:none}
+.d{font-size:64px;line-height:64px;font-weight:600;letter-spacing:-0.04em}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.body{display:grid;grid-template-columns:220px minmax(0,720px);gap:96px;align-items:start}
+.toc{display:flex;flex-direction:column;gap:2px}
+.toc a{font-size:13px;line-height:18px;color:#a9afbc;padding:8px 0}.toc a:hover{color:#f2f3f5}
+.sec{padding-top:24px;margin-bottom:96px}
+.sec h2{margin:12px 0 24px;font-size:32px;line-height:38px;font-weight:500;letter-spacing:-0.03em}
+.sec p{margin:0 0 20px;font-size:17px;line-height:28px;letter-spacing:-0.01em;color:#c9cdd6}
+.li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:16px 0;font-size:17px;line-height:28px;color:#c9cdd6}
+.dec{display:grid;grid-template-columns:48px minmax(0,1fr);gap:16px;padding:28px 0}
+.dec h3{margin:0 0 8px;font-size:20px;line-height:26px;font-weight:500;letter-spacing:-0.02em}
+.dec p{margin:0 0 12px;font-size:15px;line-height:24px;color:#a9afbc}
+.tr{display:grid;grid-template-columns:140px minmax(0,1fr) minmax(0,1fr);gap:16px;padding:14px 20px;align-items:center;font-size:14px;line-height:22px}
+.c2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.c3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ph{color:#f5c96a}
+.node{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.10);font-size:14px}
+@media (max-width:900px){.w{padding:0 16px}.d{font-size:44px;line-height:48px}.meta,.c2,.c3{grid-template-columns:minmax(0,1fr)}.body{grid-template-columns:minmax(0,1fr);gap:32px}.toc{display:none}.tr{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-transparency:reduce){.gl{background:#14171d;backdrop-filter:none}}
+</style>
+<script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+<div style="min-height: 100vh; font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: #f2f3f5; background: radial-gradient(1100px 620px at 15% -10%, rgba(38,112,255,0.20), transparent 65%), #05070c">
+
+<header class="w" style="padding-top: 32px; padding-bottom: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px">
+<a href="../index.html" style="font-size: 15px; font-weight: 600; letter-spacing: -0.02em">Shafeq<span style="color: #4b8dff">.</span></a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 28px">
+<a class="nl on" href="../work.html">Work</a>
+<a class="nl" href="../editorial.html">Editorial</a>
+<a class="nl" href="../book.html">Book</a>
+<a class="nl" href="../about.html">About</a>
+<a class="b bo" href="../contact.html" style="height: 40px">Contact</a>
+</nav>
+</header>
+
+<section class="w" style="padding-top: 64px">
+<nav aria-label="Breadcrumb" class="m" style="display: flex; gap: 8px; margin-bottom: 48px"><a href="../work.html" style="color: #a9afbc">Work</a><span aria-hidden="true">/</span><span aria-current="page" style="color: #f2f3f5">Sovereign AI</span></nav>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px"><span class="k">Case study 02 · Armada.ai</span><span class="bd nt">[Status]</span></div>
+<h1 class="d" style="margin: 0; max-width: 900px">Sovereign AI / Azure Local</h1>
+<p style="margin: 24px 0 0; max-width: 760px; font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: -0.025em; color: #a9afbc">Bringing tenant context, roles and permissions, infrastructure and governance together into one coherent enterprise experience.</p>
+
+<div class="meta hr" style="margin-top: 64px; padding-top: 24px">
+<div><div class="k" style="margin-bottom: 8px">Role</div><div style="font-size: 14px; line-height: 22px">UX Lead · <span class="ph">[confirm scope]</span></div></div>
+<div><div class="k" style="margin-bottom: 8px">Company</div><div style="font-size: 14px; line-height: 22px">Armada.ai</div></div>
+<div><div class="k" style="margin-bottom: 8px">Timeline</div><div style="font-size: 14px; line-height: 22px" class="ph">[Start – end]</div></div>
+<div><div class="k" style="margin-bottom: 8px">Focus</div><div style="font-size: 14px; line-height: 22px">Enterprise architecture + governance</div></div>
+</div>
+
+<figure style="margin: 48px 0 0">
+<div class="st" style="height: 640px; display: flex; align-items: flex-end; justify-content: center; padding: 48px; box-sizing: border-box">
+<img loading="lazy" decoding="async" src="../assets/images/case-sovereign.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85">
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 24px; width: 100%; max-width: 980px; align-items: stretch; justify-content: space-between">
+<div class="gl" style="flex: 1 1 400px; border-radius: 20px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div class="k" style="margin-bottom: 6px">Context</div>
+<div class="node"><span><span class="m" style="margin-right: 8px">Tenant</span>Organisation</span><span class="m">Region: in-country</span></div>
+<div style="padding-left: 24px; display: flex; flex-direction: column; gap: 10px; box-shadow: inset 1px 0 0 rgba(255,255,255,0.10); margin-left: 12px">
+<div class="node" style="background: rgba(75,141,255,0.16); box-shadow: inset 0 0 0 1px #4b8dff"><span><span class="m" style="margin-right: 8px; color: #8ab4ff">Project</span>Research models</span><span class="bd ok">Compliant</span></div>
+<div style="padding-left: 24px; display: flex; flex-direction: column; gap: 10px; box-shadow: inset 1px 0 0 rgba(255,255,255,0.10); margin-left: 12px">
+<div class="node"><span><span class="m" style="margin-right: 8px">Resource</span>GPU pool</span><span class="m">Healthy</span></div>
+<div class="node"><span><span class="m" style="margin-right: 8px">Resource</span>Model registry</span><span class="m">Healthy</span></div>
+</div>
+<div class="node"><span><span class="m" style="margin-right: 8px">Project</span>Operations</span><span class="bd wn">Review policy</span></div>
+</div>
+</div>
+<div class="gl" style="flex: 1 1 300px; border-radius: 20px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div class="k" style="margin-bottom: 2px">Access · Research models</div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Project owner</span><span class="m">Can manage access</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Model developer</span><span class="m">Can deploy models</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>Viewer</span><span class="m">Can view usage</span></div>
+<div class="hr" style="padding-top: 14px; font-size: 13px; line-height: 20px; color: #a9afbc">3 people inherit access from the tenant. <span style="color: #8ab4ff">Show why</span></div>
+</div>
+</div>
+</div>
+<figcaption class="m" style="margin-top: 12px">Illustrative recreation of the concepts — not production UI.</figcaption>
+</figure>
+</section>
+
+<section class="w" style="padding-top: 120px">
+<div class="body">
+<nav aria-label="On this page" class="toc">
+<span class="k" style="margin-bottom: 12px">On this page</span>
+<a href="#overview">Overview</a><a href="#problem">The problem</a><a href="#role">My role</a><a href="#difficult">What made it difficult</a><a href="#decisions">Key decisions</a><a href="#ia">Information architecture</a><a href="#validation">Validation</a><a href="#outcome">Outcome</a><a href="#next">What I’d improve next</a>
+</nav>
+<article>
+
+<section id="overview" class="sec hr">
+<span class="k">01 — Overview</span>
+<h2>Governed AI infrastructure, one experience</h2>
+<p>Sovereign AI on Azure Local lets organisations run AI workloads on infrastructure they control, within the boundaries their regulators and policies require. Administrators manage tenants, projects, people, infrastructure and governance — responsibilities that are often spread across separate tools.</p>
+<p>The design work focused on making those responsibilities feel like one product: always clear which tenant and project you are in, who can do what, and whether what you are looking at complies with policy.</p>
+</section>
+
+<section id="problem" class="sec hr">
+<span class="k">02 — The problem</span>
+<h2>Simple questions were hard to answer</h2>
+<p>Each concern — tenancy, identity, infrastructure, policy — comes with its own mental model. Administrators switch context constantly, and everyday questions become investigations:</p>
+<div class="li hr"><span class="m">?</span><span style="color: #f2f3f5">Which tenant and project am I acting in right now?</span></div>
+<div class="li hr"><span class="m">?</span><span style="color: #f2f3f5">Who can access this project — and why?</span></div>
+<div class="li hr"><span class="m">?</span><span style="color: #f2f3f5">Where does this data and compute live, and which policy applies?</span></div>
+<p class="ph" style="margin-top: 20px">[Add evidence of the confusion — admin interviews, support themes, onboarding feedback.]</p>
+</section>
+
+<section id="role" class="sec hr">
+<span class="k">03 — My role</span>
+<h2>What I owned</h2>
+<div class="gl" style="border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div class="li" style="padding: 0"><span class="m">→</span><span class="ph">[Your ownership — e.g. information architecture, permission model UX, admin workflows]</span></div>
+<div class="li" style="padding: 0"><span class="m">→</span><span class="ph">[Partners — product, platform engineering, security, compliance]</span></div>
+<div class="li" style="padding: 0"><span class="m">→</span><span class="ph">[What others owned]</span></div>
+</div>
+</section>
+
+<section id="difficult" class="sec hr">
+<span class="k">04 — What made it difficult</span>
+<h2>Constraints</h2>
+<div class="li hr"><span class="m">01</span><span><span style="color: #f2f3f5">Security and sovereignty are non-negotiable.</span> Simplifying could never hide a permission or a policy boundary.</span></div>
+<div class="li hr"><span class="m">02</span><span><span style="color: #f2f3f5">Inherited access.</span> Permissions flow from tenant to project to resource, which makes effective access hard to see.</span></div>
+<div class="li hr"><span class="m">03</span><span><span style="color: #f2f3f5">Platform dependencies.</span> Underlying cloud and on-premises concepts had to be respected, not reinvented.</span></div>
+<div class="li hr"><span class="m">04</span><span><span style="color: #f2f3f5">Many stakeholders.</span> Security, compliance, infrastructure and product teams each had legitimate and sometimes conflicting needs.</span></div>
+</section>
+
+<section id="decisions" class="sec hr">
+<span class="k">05 — Key decisions</span>
+<h2>Four decisions behind the experience</h2>
+<div class="dec hr"><span class="m" style="color: #4b8dff">01</span><div><h3>The project is the anchor</h3><p>Every screen shows the current tenant and project. Resources, people, usage and policy are all reached from the project rather than from separate admin areas.</p><p class="m">Trade-off: tenant-wide admins need a separate cross-project view for bulk tasks.</p></div></div>
+<div class="dec hr"><span class="m" style="color: #4b8dff">02</span><div><h3>Describe roles as capabilities</h3><p>Roles are explained by what people can do — “can deploy models”, “can view usage” — with inherited and direct access shown separately, so effective access is readable without decoding permission sets.</p><p class="m">Trade-off: capability labels must stay mapped to the real permission model as it changes.</p></div></div>
+<div class="dec hr"><span class="m" style="color: #4b8dff">03</span><div><h3>Governance in context</h3><p>Residency and policy status appear on the projects and resources they govern, at the moment a decision is made, instead of in a separate compliance report.</p><p class="m">Trade-off: more information on each object, so status uses one compact, consistent pattern.</p></div></div>
+<div class="dec hr" style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(255,255,255,0.10)"><span class="m" style="color: #4b8dff">04</span><div><h3>Same patterns at every level</h3><p>Tenant, project and resource administration share layouts, actions and terminology, so learning one level teaches the others.</p><p class="m">Trade-off: some level-specific edge cases need progressive disclosure.</p></div></div>
+<p class="ph" style="margin-top: 24px">[Confirm each decision, the alternatives you considered (e.g. a role-first or resource-first IA) and why you chose this direction.]</p>
+</section>
+
+<section id="ia" class="sec hr">
+<span class="k">06 — Information architecture</span>
+<h2>From five consoles to one hierarchy</h2>
+<div class="gl" style="border-radius: 20px; overflow: hidden">
+<div class="tr" style="background: rgba(255,255,255,0.04)"><span class="k">Level</span><span class="k">What lives here</span><span class="k">Typical question</span></div>
+<div class="tr hr"><span style="font-weight: 500">Tenant</span><span style="color: #a9afbc">Organisation settings, identity, region, global policy</span><span style="color: #a9afbc">Are we configured correctly?</span></div>
+<div class="tr hr"><span style="font-weight: 500">Project</span><span style="color: #a9afbc">People and roles, resources, usage, project policy</span><span style="color: #a9afbc">Who can do what here?</span></div>
+<div class="tr hr"><span style="font-weight: 500">Resource</span><span style="color: #a9afbc">Compute, storage, models, health</span><span style="color: #a9afbc">Is this working and compliant?</span></div>
+</div>
+<p class="m" style="margin-top: 12px">Illustrative — sanitised; no internal architecture is shown.</p>
+</section>
+
+<section id="validation" class="sec hr">
+<span class="k">07 — Validation</span>
+<h2>How we knew it worked</h2>
+<p class="ph">[Evidence — e.g. admin walkthroughs, permission-task testing, stakeholder reviews with security and compliance, support trends.]</p>
+</section>
+
+<section id="outcome" class="sec hr">
+<span class="k">08 — Outcome</span>
+<h2>What changed</h2>
+<div class="c2">
+<div class="gl" style="border-radius: 20px; padding: 24px"><span class="bd ok">Delivered</span><p class="ph" style="margin: 16px 0 0; font-size: 15px; line-height: 24px">[What shipped or was handed to engineering]</p></div>
+<div class="gl" style="border-radius: 20px; padding: 24px"><span class="bd nt">Not yet measured</span><p class="ph" style="margin: 16px 0 0; font-size: 15px; line-height: 24px">[Impact still to be verified]</p></div>
+</div>
+<div class="c3" style="margin-top: 16px">
+<div class="gl" style="border-radius: 20px; padding: 24px"><div class="ph" style="font-size: 52px; line-height: 56px; font-weight: 500; letter-spacing: -0.04em">[—]</div><div style="font-size: 13px; font-weight: 500; margin-top: 8px">[Verified metric]</div><div class="m" style="margin-top: 4px">[Source and period]</div></div>
+<div class="gl" style="border-radius: 20px; padding: 24px"><div class="ph" style="font-size: 52px; line-height: 56px; font-weight: 500; letter-spacing: -0.04em">[—]</div><div style="font-size: 13px; font-weight: 500; margin-top: 8px">[Verified metric]</div><div class="m" style="margin-top: 4px">[Source and period]</div></div>
+<div class="gl" style="border-radius: 20px; padding: 24px"><div class="ph" style="font-size: 52px; line-height: 56px; font-weight: 500; letter-spacing: -0.04em">[—]</div><div style="font-size: 13px; font-weight: 500; margin-top: 8px">[Verified metric]</div><div class="m" style="margin-top: 4px">[Source and period]</div></div>
+</div>
+</section>
+
+<section id="next" class="sec hr" style="margin-bottom: 0">
+<span class="k">09 — What I’d improve next</span>
+<h2>Next</h2>
+<p class="ph">[e.g. an access-review flow, policy simulation before changes, audit history in context.]</p>
+</section>
+</article>
+</div>
+</section>
+
+<section class="w" style="padding-top: 160px">
+<a href="../work/fleet-operations.html" class="hr" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; padding-top: 32px">
+<div><div class="k" style="margin-bottom: 12px">Next case study · 03</div><div style="font-size: 44px; line-height: 48px; font-weight: 600; letter-spacing: -0.035em">Satellite connectivity and fleet operations</div></div>
+<span class="b bw">Read next →</span>
+</a>
+</section>
+
+<footer class="w" style="padding-top: 120px; padding-bottom: 48px">
+<div class="hr" style="padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; font-size: 13px; line-height: 18px; color: #a9afbc"><span>© 2026 Shafeq · Dubai, UAE</span><div style="display: flex; flex-wrap: wrap; gap: 24px"><a href="../work.html" style="color: #a9afbc">Work</a><a href="../editorial.html" style="color: #a9afbc">Editorial</a><a href="../contact.html" style="color: #a9afbc">Contact</a></div></div>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<defs>
+<radialGradient id="bg" cx="50%" cy="30%" r="80%"><stop offset="0" stop-color="#16244a"></stop><stop offset="0.6" stop-color="#0a0d13"></stop><stop offset="1" stop-color="#05070c"></stop></radialGradient>
+<radialGradient id="b" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffffff"></stop><stop offset="0.25" stop-color="#8ab4ff"></stop><stop offset="1" stop-color="#1b56d8"></stop></radialGradient>
+<radialGradient id="g" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffffff"></stop><stop offset="0.3" stop-color="#c9ced8"></stop><stop offset="1" stop-color="#454c5c"></stop></radialGradient>
+<radialGradient id="lead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffffff"></stop><stop offset="0.35" stop-color="#f3f4f6"></stop><stop offset="1" stop-color="#8a92a3"></stop></radialGradient>
+<filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"></feGaussianBlur></filter>
+<filter id="sh" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"></feGaussianBlur></filter>
+</defs>
+<rect width="1200" height="800" fill="url(#bg)"></rect>
+<circle cx="600" cy="400" r="200" fill="#2670ff" opacity="0.28" filter="url(#blur)"></circle>
+<g stroke="#8ab4ff" stroke-opacity="0.28" stroke-width="1.5" fill="none">
+<path d="M600 400 L420 260 M600 400 L780 250 M600 400 L860 430 M600 400 L760 590 M600 400 L440 600 M600 400 L330 430"></path>
+<path d="M420 260 L300 180 M420 260 L470 140 M780 250 L730 130 M780 250 L910 170 M860 430 L1000 360 M860 430 L990 520 M760 590 L860 690 M760 590 L640 700 M440 600 L330 690 M440 600 L520 710 M330 430 L190 360 M330 430 L200 530"></path>
+</g>
+<ellipse cx="600" cy="470" rx="70" ry="14" fill="#000" opacity="0.5" filter="url(#sh)"></ellipse>
+<circle cx="600" cy="400" r="62" fill="url(#lead)"></circle>
+<circle cx="420" cy="260" r="34" fill="url(#b)"></circle><circle cx="780" cy="250" r="34" fill="url(#b)"></circle><circle cx="860" cy="430" r="34" fill="url(#b)"></circle><circle cx="760" cy="590" r="34" fill="url(#b)"></circle><circle cx="440" cy="600" r="34" fill="url(#b)"></circle><circle cx="330" cy="430" r="34" fill="url(#b)"></circle>
+<circle cx="300" cy="180" r="22" fill="url(#b)"></circle><circle cx="470" cy="140" r="22" fill="url(#b)"></circle><circle cx="730" cy="130" r="22" fill="url(#b)"></circle>
+<circle cx="910" cy="170" r="22" fill="url(#g)"></circle><circle cx="1000" cy="360" r="22" fill="url(#g)"></circle><circle cx="990" cy="520" r="22" fill="url(#g)"></circle><circle cx="860" cy="690" r="22" fill="url(#g)"></circle><circle cx="640" cy="700" r="22" fill="url(#g)"></circle><circle cx="330" cy="690" r="22" fill="url(#g)"></circle><circle cx="520" cy="710" r="22" fill="url(#g)"></circle><circle cx="190" cy="360" r="22" fill="url(#g)"></circle><circle cx="200" cy="530" r="22" fill="url(#g)"></circle>
+</svg>

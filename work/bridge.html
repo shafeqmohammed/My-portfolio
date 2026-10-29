@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bridge — GPU as a Service · Case study</title>
+<meta name="description" content="Making GPU infrastructure understandable: how people connect, configure, operate and recover — without needing to think like the infrastructure.">
+<meta name="theme-color" content="#05070c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bridge — GPU as a Service · Case study">
+<meta property="og:description" content="Making GPU infrastructure understandable: how people connect, configure, operate and recover — without needing to think like the infrastructure.">
+<meta property="og:image" content="../assets/images/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#05070c}
+a{color:#f2f3f5;text-decoration:none;transition:color 120ms ease-out}a:hover{color:#8ab4ff}
+a:focus-visible,button:focus-visible{outline:2px solid #8ab4ff;outline-offset:3px}
+.w{max-width:1200px;margin:0 auto;padding:0 48px;box-sizing:border-box}
+.k{font-family:'Geist Mono',ui-monospace,monospace;font-size:11px;line-height:16px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a9afbc}
+.m{font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;line-height:18px;color:#a9afbc}
+.nl{font-size:13px;line-height:18px;color:#a9afbc;padding:12px 2px}.nl:hover,.nl.on{color:#f2f3f5}
+.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:9999px;font-family:Geist,sans-serif;font-size:13px;font-weight:500;border:0;cursor:pointer;box-sizing:border-box}
+.bw{background:#f3f4f6;color:#0b0e14}.bw:hover{color:#0b0e14;background:#ffffff}
+.bo{background:transparent;color:#f2f3f5;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.42)}.bo:hover{color:#f2f3f5;background:rgba(255,255,255,0.08)}
+.hr{box-shadow:inset 0 1px 0 rgba(255,255,255,0.10)}
+.st{position:relative;overflow:hidden;border-radius:28px;background:radial-gradient(700px 400px at 50% -10%,rgba(38,112,255,0.20),transparent 70%),#0a0d13;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.10)}
+.gl{background:rgba(26,29,37,0.55);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.12),inset 0 0 0 1px rgba(255,255,255,0.10),0 24px 48px -28px rgba(0,0,0,0.55)}
+.bd{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:9999px;font-family:'Geist Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap}
+.ok{color:#6fdc9c;background:rgba(111,220,156,0.12);box-shadow:inset 0 0 0 1px rgba(111,220,156,0.45)}
+.ip{color:#8cbff2;background:rgba(140,191,242,0.12);box-shadow:inset 0 0 0 1px rgba(140,191,242,0.45)}
+.wn{color:#f5c96a;background:rgba(245,201,106,0.12);box-shadow:inset 0 0 0 1px rgba(245,201,106,0.45)}
+.er{color:#ff8f8f;background:rgba(255,143,143,0.12);box-shadow:inset 0 0 0 1px rgba(255,143,143,0.45)}
+.nt{color:#a9afbc;background:rgba(255,255,255,0.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.30)}
+.dot{width:8px;height:8px;border-radius:9999px;display:inline-block;flex:none}
+.d{font-size:64px;line-height:64px;font-weight:600;letter-spacing:-0.04em}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.body{display:grid;grid-template-columns:220px minmax(0,720px);gap:96px;align-items:start}
+.toc{display:flex;flex-direction:column;gap:2px}
+.toc a{font-size:13px;line-height:18px;color:#a9afbc;padding:8px 0}.toc a:hover{color:#f2f3f5}
+.sec{padding-top:24px;margin-bottom:96px}
+.sec h2{margin:12px 0 24px;font-size:32px;line-height:38px;font-weight:500;letter-spacing:-0.03em}
+.sec p{margin:0 0 20px;font-size:17px;line-height:28px;letter-spacing:-0.01em;color:#c9cdd6}
+.li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:16px 0;font-size:17px;line-height:28px;color:#c9cdd6}
+.dec{display:grid;grid-template-columns:48px minmax(0,1fr);gap:16px;padding:28px 0}
+.dec h3{margin:0 0 8px;font-size:20px;line-height:26px;font-weight:500;letter-spacing:-0.02em}
+.dec p{margin:0 0 12px;font-size:15px;line-height:24px;color:#a9afbc}
+.tr{display:grid;grid-template-columns:160px minmax(0,1fr) 180px;gap:16px;padding:14px 20px;align-items:center;font-size:14px;line-height:22px}
+.c2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.c3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ph{color:#f5c96a}
+@media (max-width:900px){.w{padding:0 16px}.d{font-size:44px;line-height:48px}.meta,.c2,.c3{grid-template-columns:minmax(0,1fr)}.body{grid-template-columns:minmax(0,1fr);gap:32px}.toc{display:none}.tr{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-transparency:reduce){.gl{background:#14171d;backdrop-filter:none}}
+</style>
+<script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+<div style="min-height: 100vh; font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: #f2f3f5; background: radial-gradient(1100px 620px at 15% -10%, rgba(38,112,255,0.20), transparent 65%), #05070c">
+
+<header class="w" style="padding-top: 32px; padding-bottom: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px">
+<a href="../index.html" style="font-size: 15px; font-weight: 600; letter-spacing: -0.02em">Shafeq<span style="color: #4b8dff">.</span></a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 28px">
+<a class="nl on" href="../work.html">Work</a>
+<a class="nl" href="../editorial.html">Editorial</a>
+<a class="nl" href="../book.html">Book</a>
+<a class="nl" href="../about.html">About</a>
+<a class="b bo" href="../contact.html" style="height: 40px">Contact</a>
+</nav>
+</header>
+
+<section class="w" style="padding-top: 64px">
+<nav aria-label="Breadcrumb" class="m" style="display: flex; gap: 8px; margin-bottom: 48px"><a href="../work.html" style="color: #a9afbc">Work</a><span aria-hidden="true">/</span><span aria-current="page" style="color: #f2f3f5">Bridge</span></nav>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px"><span class="k">Case study 01 · Armada.ai</span><span class="bd nt">[Status: shipped / in progress]</span></div>
+<h1 class="d" style="margin: 0; max-width: 900px">Bridge — GPU as a Service</h1>
+<p style="margin: 24px 0 0; max-width: 760px; font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: -0.025em; color: #a9afbc">Making GPU infrastructure understandable: how people connect, configure, operate and recover — without needing to think like the infrastructure.</p>
+
+<div class="meta hr" style="margin-top: 64px; padding-top: 24px">
+<div><div class="k" style="margin-bottom: 8px">Role</div><div style="font-size: 14px; line-height: 22px">UX Lead · <span class="ph">[confirm scope]</span></div></div>
+<div><div class="k" style="margin-bottom: 8px">Company</div><div style="font-size: 14px; line-height: 22px">Armada.ai</div></div>
+<div><div class="k" style="margin-bottom: 8px">Timeline</div><div style="font-size: 14px; line-height: 22px" class="ph">[Start – end]</div></div>
+<div><div class="k" style="margin-bottom: 8px">Focus</div><div style="font-size: 14px; line-height: 22px">Product strategy + technical UX</div></div>
+</div>
+
+<figure style="margin: 48px 0 0">
+<div class="st" style="height: 640px; display: flex; align-items: flex-end; justify-content: center; padding: 48px; box-sizing: border-box">
+<img loading="lazy" decoding="async" src="../assets/images/case-bridge.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+<div style="position: relative; display: flex; flex-wrap: wrap; gap: 24px; width: 100%; max-width: 980px; align-items: stretch; justify-content: space-between">
+<div class="gl" style="flex: 1 1 380px; border-radius: 20px; padding: 24px; box-sizing: border-box">
+<div class="k" style="margin-bottom: 16px">Configure workload</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 14px; background: rgba(75,141,255,0.16); box-shadow: inset 0 0 0 1px #4b8dff"><div><div style="font-size: 14px; font-weight: 500">GPU class A</div><div class="m">High memory · training</div></div><span class="m" style="color: #f2f3f5">Available now</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 14px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10)"><div><div style="font-size: 14px; font-weight: 500">GPU class B</div><div class="m">Balanced · inference</div></div><span class="m">Available now</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 14px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10)"><div><div style="font-size: 14px; font-weight: 500">GPU class C</div><div class="m">Limited capacity</div></div><span class="m" style="color: #f5c96a">Queue expected</span></div>
+</div>
+<div class="hr" style="margin-top: 20px; padding-top: 16px; display: flex; justify-content: space-between; font-size: 13px"><span style="color: #a9afbc">Estimated cost shown before you commit</span><span>Review →</span></div>
+</div>
+<div class="gl" style="flex: 1 1 300px; border-radius: 20px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div class="k" style="margin-bottom: 2px">Workloads</div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px"><span>training-run-07</span><span class="bd ok"><span class="dot" style="background: #6fdc9c"></span>Running</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px"><span>inference-api</span><span class="bd ip"><span class="dot" style="background: #8cbff2"></span>Provisioning</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px"><span>eval-batch-02</span><span class="bd wn"><span class="dot" style="background: #f5c96a"></span>Idle</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px"><span>finetune-03</span><span class="bd er"><span class="dot" style="background: #ff8f8f"></span>Failed</span></div>
+<div style="margin-top: auto; padding: 12px 14px; border-radius: 14px; background: rgba(255,143,143,0.08); box-shadow: inset 0 0 0 1px rgba(255,143,143,0.30); font-size: 13px; line-height: 20px; color: #f2f3f5">finetune-03 stopped: capacity was reclaimed. <span style="color: #8ab4ff">Retry on class B</span></div>
+</div>
+</div>
+</div>
+<figcaption class="m" style="margin-top: 12px">Illustrative recreation of the concepts — not production UI.</figcaption>
+</figure>
+</section>
+
+<section class="w" style="padding-top: 120px">
+<div class="body">
+<nav aria-label="On this page" class="toc">
+<span class="k" style="margin-bottom: 12px">On this page</span>
+<a href="#overview">Overview</a><a href="#problem">The problem</a><a href="#role">My role</a><a href="#difficult">What made it difficult</a><a href="#decisions">Key decisions</a><a href="#states">System states</a><a href="#validation">Validation</a><a href="#outcome">Outcome</a><a href="#next">What I’d improve next</a>
+</nav>
+<article>
+
+<section id="overview" class="sec hr">
+<span class="k">01 — Overview</span>
+<h2>Infrastructure people can operate with confidence</h2>
+<p>Bridge is Armada’s GPU-as-a-Service experience. Teams use it to get GPU compute for AI workloads: connect to the service, choose and configure capacity, run and monitor workloads, and recover when something goes wrong.</p>
+<p>The design challenge was not drawing a console. It was translating a deeply technical system — hardware classes, capacity, provisioning, usage and failure — into a sequence of decisions that people can understand and trust.</p>
+</section>
+
+<section id="problem" class="sec hr">
+<span class="k">02 — The problem</span>
+<h2>The system’s structure is not the user’s mental model</h2>
+<p>Infrastructure products tend to expose their own architecture: clusters, nodes, quotas, logs. The people using them think in workloads, deadlines and budgets. That gap shows up as hesitation during configuration, uncertainty about what a workload is doing, and support requests when a state is unclear.</p>
+<p>Three questions had to be answerable at every point: <span style="color: #f2f3f5">What is happening right now? What needs my attention? What happens if I take this action?</span></p>
+<p class="ph">[Add who experienced the problem — e.g. ML engineers, platform admins, decision-makers — and any evidence: support themes, research quotes, drop-off points.]</p>
+</section>
+
+<section id="role" class="sec hr">
+<span class="k">03 — My role</span>
+<h2>What I owned</h2>
+<div class="gl" style="border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div class="li" style="padding: 0; color: #f2f3f5"><span class="m">→</span><span class="ph">[Your ownership — e.g. end-to-end UX for provisioning and monitoring, information architecture, interaction model]</span></div>
+<div class="li" style="padding: 0; color: #f2f3f5"><span class="m">→</span><span class="ph">[Who you worked with — product managers, engineering leads, researchers, other designers]</span></div>
+<div class="li" style="padding: 0; color: #f2f3f5"><span class="m">→</span><span class="ph">[What others owned — keep the line between your contribution and the team’s clear]</span></div>
+</div>
+</section>
+
+<section id="difficult" class="sec hr">
+<span class="k">04 — What made it difficult</span>
+<h2>Constraints that shaped the design</h2>
+<div class="li hr"><span class="m">01</span><span><span style="color: #f2f3f5">Capacity changes in real time.</span> What is available when a user starts configuring may not be available when they confirm.</span></div>
+<div class="li hr"><span class="m">02</span><span><span style="color: #f2f3f5">Long-running, asynchronous states.</span> Provisioning and workloads run for minutes to days; the interface has to stay truthful the whole time.</span></div>
+<div class="li hr"><span class="m">03</span><span><span style="color: #f2f3f5">Cost and consequence.</span> Configuration choices carry real cost, so uncertainty at the moment of commitment is expensive.</span></div>
+<div class="li hr"><span class="m">04</span><span><span style="color: #f2f3f5">Different expertise levels.</span> Infrastructure specialists and model builders use the same product with very different vocabularies.</span></div>
+</section>
+
+<section id="decisions" class="sec hr">
+<span class="k">05 — Key decisions</span>
+<h2>Four decisions that simplified the product</h2>
+<div class="dec hr"><span class="m" style="color: #4b8dff">01</span><div><h3>Organise around the workload, not the hardware</h3><p>The workload became the primary object. Hardware, capacity and usage are attributes of a workload rather than separate places to navigate.</p><p class="m">Trade-off: specialists lose a hardware-first view, so it remains available as a secondary lens.</p></div></div>
+<div class="dec hr"><span class="m" style="color: #4b8dff">02</span><div><h3>One state model, everywhere</h3><p>Every workload uses the same small set of states, with the same names, colours, icons and next actions in lists, detail views and notifications.</p><p class="m">Trade-off: some engineering sub-states are grouped, with detail one level down.</p></div></div>
+<div class="dec hr"><span class="m" style="color: #4b8dff">03</span><div><h3>Show trade-offs at the moment of choice</h3><p>Availability, expected wait and estimated cost sit beside each option before the user commits, instead of appearing after the fact.</p><p class="m">Trade-off: estimates need clear labelling so they are not read as guarantees.</p></div></div>
+<div class="dec hr" style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(255,255,255,0.10)"><span class="m" style="color: #4b8dff">04</span><div><h3>Make every failure recoverable</h3><p>Each error state says what happened, why it matters and the next best action — retry, change configuration or contact support — rather than only reporting a code.</p><p class="m">Trade-off: requires close work with engineering to map failure causes to actions.</p></div></div>
+<p class="ph" style="margin-top: 24px">[Replace or confirm each decision against what you actually decided, the alternatives you considered and how you influenced the direction.]</p>
+</section>
+
+<section id="states" class="sec hr">
+<span class="k">06 — System states</span>
+<h2>A shared vocabulary for workload state</h2>
+<div class="gl" style="border-radius: 20px; overflow: hidden">
+<div class="tr" style="background: rgba(255,255,255,0.04)"><span class="k">State</span><span class="k">What it means</span><span class="k">Primary action</span></div>
+<div class="tr hr"><span class="bd nt" style="justify-self: start">Requested</span><span style="color: #a9afbc">Request received; configuration not yet confirmed</span><span>Edit request</span></div>
+<div class="tr hr"><span class="bd ip" style="justify-self: start">Provisioning</span><span style="color: #a9afbc">Capacity is being allocated</span><span>View progress</span></div>
+<div class="tr hr"><span class="bd ok" style="justify-self: start">Running</span><span style="color: #a9afbc">Workload active and using capacity</span><span>Monitor or stop</span></div>
+<div class="tr hr"><span class="bd wn" style="justify-self: start">Idle</span><span style="color: #a9afbc">Capacity allocated but not in use</span><span>Resume or release</span></div>
+<div class="tr hr"><span class="bd er" style="justify-self: start">Failed</span><span style="color: #a9afbc">Could not start, or stopped unexpectedly</span><span>See cause and retry</span></div>
+<div class="tr hr"><span class="bd nt" style="justify-self: start">Released</span><span style="color: #a9afbc">Capacity returned; history kept</span><span>View summary</span></div>
+</div>
+<p class="m" style="margin-top: 12px">Illustrative model — align names with the shipped product before publishing.</p>
+</section>
+
+<section id="validation" class="sec hr">
+<span class="k">07 — Validation</span>
+<h2>How we knew it worked</h2>
+<p class="ph">[The evidence you have: usability sessions, internal pilots, telemetry on task completion, support-ticket trends, engineering feedback. State what was tested, with whom and what changed as a result.]</p>
+</section>
+
+<section id="outcome" class="sec hr">
+<span class="k">08 — Outcome</span>
+<h2>Shipped, in progress and still unmeasured</h2>
+<div class="c2">
+<div class="gl" style="border-radius: 20px; padding: 24px"><span class="bd ok">Shipped</span><p class="ph" style="margin: 16px 0 0; font-size: 15px; line-height: 24px">[What is live today]</p></div>
+<div class="gl" style="border-radius: 20px; padding: 24px"><span class="bd ip">In progress</span><p class="ph" style="margin: 16px 0 0; font-size: 15px; line-height: 24px">[What is designed or being built]</p></div>
+</div>
+<div class="c3" style="margin-top: 16px">
+<div class="gl" style="border-radius: 20px; padding: 24px"><div style="font-size: 52px; line-height: 56px; font-weight: 500; letter-spacing: -0.04em; font-variant-numeric: tabular-nums" class="ph">[—]</div><div style="font-size: 13px; font-weight: 500; margin-top: 8px">[Verified metric]</div><div class="m" style="margin-top: 4px">[Source and period]</div></div>
+<div class="gl" style="border-radius: 20px; padding: 24px"><div style="font-size: 52px; line-height: 56px; font-weight: 500; letter-spacing: -0.04em; font-variant-numeric: tabular-nums" class="ph">[—]</div><div style="font-size: 13px; font-weight: 500; margin-top: 8px">[Verified metric]</div><div class="m" style="margin-top: 4px">[Source and period]</div></div>
+<div class="gl" style="border-radius: 20px; padding: 24px"><div style="font-size: 52px; line-height: 56px; font-weight: 500; letter-spacing: -0.04em; font-variant-numeric: tabular-nums" class="ph">[—]</div><div style="font-size: 13px; font-weight: 500; margin-top: 8px">[Verified metric]</div><div class="m" style="margin-top: 4px">[Source and period]</div></div>
+</div>
+<p class="m" style="margin-top: 12px">Only verified outcomes are shown. Where impact is not yet measured, the page says so.</p>
+</section>
+
+<section id="next" class="sec hr" style="margin-bottom: 0">
+<span class="k">09 — What I’d improve next</span>
+<h2>Next</h2>
+<p class="ph">[What you would change with more time or evidence — e.g. predictive capacity guidance, cost visibility across a team, richer failure diagnostics.]</p>
+</section>
+</article>
+</div>
+</section>
+
+<section class="w" style="padding-top: 160px">
+<a href="../work/sovereign-ai.html" class="hr" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; padding-top: 32px">
+<div><div class="k" style="margin-bottom: 12px">Next case study · 02</div><div style="font-size: 44px; line-height: 48px; font-weight: 600; letter-spacing: -0.035em">Sovereign AI / Azure Local</div></div>
+<span class="b bw">Read next →</span>
+</a>
+</section>
+
+<footer class="w" style="padding-top: 120px; padding-bottom: 48px">
+<div class="hr" style="padding-top: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; font-size: 13px; line-height: 18px; color: #a9afbc"><span>© 2026 Shafeq · Dubai, UAE</span><div style="display: flex; flex-wrap: wrap; gap: 24px"><a href="../work.html" style="color: #a9afbc">Work</a><a href="../editorial.html" style="color: #a9afbc">Editorial</a><a href="../contact.html" style="color: #a9afbc">Contact</a></div></div>
+</footer>
+</div>
+</body>
+</html>
